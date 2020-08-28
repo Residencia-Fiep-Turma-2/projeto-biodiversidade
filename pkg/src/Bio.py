@@ -21,6 +21,12 @@ class Bio:
         return data
     
     #Funcionalidade 1
+    
+    # dicionario(): gera um dicionário. A chave do dicionário numera cada um dos dados faltantes.
+    # Os valores do dicionário são uma lista de dois elementos que corresponde aos índices do elemento faltante na matriz data.
+    # O índice '0' corresponde à linha da matriz "data" em que o dado faltante se encontra.
+    # O índice '1' corresponde à coluna da matriz "data" em que o dado faltante se encontra.
+    
     def dicionario(self):
         p = self.open_()
         cont_linha = -1
@@ -38,6 +44,16 @@ class Bio:
             cont_coluna = -1
         return dicionario   
     
+    # dados_faltantes(): converte os valores do dicionário definido previamente em uma lista (dic_lista)
+    # Cada elemento da lista representa as coordenas matriciais dos elementos faltantes
+    # O indice [1] de cada sub-elemento da lista representa as colunas
+    # Para calcular o número de elementos faltantes por coluna, são contabilizadas as ocorrencias de cada coluna.
+    # Exemplo: dic_lista = [[1, 0], [1, 2], [4, 0], [6, 0], [6, 1], [7, 0]]
+    # A coluna 0 teve 3 ocorrências, a columa 2 teve 1 ocorrência, e a coluna 1 teve 1 ocorrência, organizando a 
+    # saída em um dicionário, obtém-se:
+    #          sorted_faltantes_coluna = {2: 1, 1: 1, 0: 4}
+    # em que a chave representa o número da coluna e o valor a quantidade de dados faltantes na mesma.
+    
     def dados_faltantes(self):
         dic_lista = list(self.dicionario().values())
         colunas = []
@@ -49,6 +65,10 @@ class Bio:
         sorted_faltantes_coluna = dict(sorted(faltantes_coluna.items(), key=lambda x: x[1]) )
     
         return sorted_faltantes_coluna
+    
+    # media(): pega os valores do dicionário definido anteriormente (sorted_faltantes_coluna)
+    # cada valor do dicionário representa a quantidade de dados faltantes por coluna
+    # soma o total de dodos faltantes por coluna e divide pela quantidade de colunas 
     
     def media(self):
         num_col0 = self.open_()
@@ -73,19 +93,12 @@ class Bio:
     
     #Funcionalidade 3
     def select_columns(self, columns_list):
-        ''' Retorna as colunas selecionadas para o conjunto de dados importado
-        '''
-        # Verifica se o parâmetro columns_list é uma lista, caso contrário
-        # exibe erro
         if not isinstance(columns_list, list):
             raise TypeError("'columns_list' should be a list")
 
-        # Obtém de forma iterativa a posição das colunas de interesse
         col_idx = []
         [col_idx.append(self.data[0].index(col)) for col in columns_list]
 
-        # Obtém de forma iterativa os valores das linhas das colunas de
-        # interesse mantendo a estrutura padrão dos dados
         result = []
         for i in range(len(self.data)):
             result_i = []
@@ -96,16 +109,9 @@ class Bio:
 
 
     def filter_rows(self, column, value):
-        ''' Retorna as linhas que respeitem uma condição conforme coluna==valor
-        '''
-        # Obtém posição da coluna que está sendo comparada a algum valor
         col_idx = self.data[0].index(column)
-
-        # Remove o cabeçalho
         clean = self.data[1:]
 
-        # Para cada linha verifica se a coluna de interesse é igual ao valor
-        # informado, caso positivo captura a linha
         result = [[self.data[0]]]
         for i in range(len(clean)):
             if clean[i][col_idx] == value:
@@ -147,28 +153,31 @@ class Bio:
 
 
 ###########Testes############
-if __name__ == "__main__":
-    bio = Bio("../data/test.csv")
+bio = Bio("../data/test.csv")
 
-    #Funcionalidade 1
-    print(bio.media())
+#Funcionalidade 1
+    #print(bio.media())
 
-    #Funcionalidade 2
+#Funcionalidade 2
     #Executando a funcao checaNivelTaxonomico mostrando o número do registro
-    result = bio.checaNivelTaxonomico()
-    for i in range(1,len(result) - 1):
-        print("Nível taxônomico registro " + str(i) + " - " + result[i])
+    #result = bio.checaNivelTaxonomico()
+    #for i in range(1,len(result) - 1):
+    #    print("Nível taxônomico registro " + str(i) + " - " + result[i])
 
     #Versão simples (printando a lista com os resultados)
-    print(bio.checaNivelTaxonomico())
+    #print(bio.checaNivelTaxonomico())
 
-    #Funcionalidade 3 
-    columns_list = ["Responsavel pelo registro", "Data do evento"]
-    print(bio.select_columns(columns_list))
+#Funcionalidade 3 
+    #columns_list = ["Responsavel pelo registro", "Data do evento"]
+    #print(bio.select_columns(columns_list))
 
-    column = "Numero do registro no portal"
-    value = "262289"
-    print(bio.filter_rows(column, value))
+    #column = "Numero do registro no portal"
+    #value = "262289"
+    #print(bio.filter_rows(column, value))
 
-    #Funcionalidade 4
-    bio.verifica_lat_long()
+#Funcionalidade 4
+    #bio.verifica_lat_long()
+    
+
+
+
