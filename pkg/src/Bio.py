@@ -21,6 +21,12 @@ class Bio:
         return data
     
     #Funcionalidade 1
+    
+    # dicionario(): gera um dicionário. A chave do dicionário numera cada um dos dados faltantes.
+    # Os valores do dicionário são uma lista de dois elementos que corresponde aos índices do elemento faltante na matriz data.
+    # O índice '0' corresponde à linha da matriz "data" em que o dado faltante se encontra.
+    # O índice '1' corresponde à coluna da matriz "data" em que o dado faltante se encontra.
+    
     def dicionario(self):
         p = self.open_()
         cont_linha = -1
@@ -38,6 +44,16 @@ class Bio:
             cont_coluna = -1
         return dicionario   
     
+    # dados_faltantes(): converte os valores do dicionário definido previamente em uma lista (dic_lista)
+    # Cada elemento da lista representa as coordenas matriciais dos elementos faltantes
+    # O indice [1] de cada sub-elemento da lista representa as colunas
+    # Para calcular o número de elementos faltantes por coluna, são contabilizadas as ocorrencias de cada coluna.
+    # Exemplo: dic_lista = [[1, 0], [1, 2], [4, 0], [6, 0], [6, 1], [7, 0]]
+    # A coluna 0 teve 3 ocorrências, a columa 2 teve 1 ocorrência, e a coluna 1 teve 1 ocorrência, organizando a 
+    # saída em um dicionário, obtém-se:
+    #          sorted_faltantes_coluna = {2: 1, 1: 1, 0: 4}
+    # em que a chave representa o número da coluna e o valor a quantidade de dados faltantes na mesma.
+    
     def dados_faltantes(self):
         dic_lista = list(self.dicionario().values())
         colunas = []
@@ -49,6 +65,10 @@ class Bio:
         sorted_faltantes_coluna = dict(sorted(faltantes_coluna.items(), key=lambda x: x[1]) )
     
         return sorted_faltantes_coluna
+    
+    # media(): pega os valores do dicionário definido anteriormente (sorted_faltantes_coluna)
+    # cada valor do dicionário representa a quantidade de dados faltantes por coluna
+    # soma o total de dodos faltantes por coluna e divide pela quantidade de colunas 
     
     def media(self):
         num_col0 = self.open_()
