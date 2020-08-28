@@ -1,11 +1,8 @@
 from opencage.geocoder import OpenCageGeocode
-from pprint import pprint
-from decimal import *
 import Bio
 import unicodedata
 
-translation = {"ç": "c", "ã": "a", "í": "i", "á":"a"}
-bio = Bio.Bio("test.csv")
+bio = Bio.Bio("../data/test.csv")
 
 key = '3f1d63102a214341bc1a293171077d33'
 geocoder = OpenCageGeocode(key)
@@ -22,4 +19,4 @@ for i in range(len(bio.data)):
             else:
                 print("Localização geográfica não correspondente ao informado \n\n")
                 print("Localização informada:" + bio.data[i][27] +"\n\n")
-                print("Localização informada por coordenadas: "+ results[0]['components']['town'])
+                print("Localização informada por coordenadas: "+ cidade_coord)
