@@ -20,12 +20,12 @@ def filter_rows(data, column, value):
     return result
 
 
-# def filter_rows_pattern(data, column, pattern):
-#     clean = data.astype(str)
-#     result = [clean.columns.tolist()]
+def filter_rows_pattern(data, column, pattern):
+    clean = data.astype(str)
+    result = [clean.columns.tolist()]
 
-#     for i in range(len(clean)):
-#         if bool(re.search(pattern, clean[column][i])):
-#             result.append(clean.iloc[i].tolist())
+    for i in range(len(clean)):
+        if bool(re.search(pattern, clean[column][i])):
+            result.append(clean.iloc[i].tolist())
 
-#     return result
+    return result

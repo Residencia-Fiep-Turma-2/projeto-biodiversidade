@@ -27,3 +27,17 @@ def filter_rows(data, column, value):
             result.append(clean[i])
 
     return result
+
+
+def filter_rows_pattern(data, column, pattern):
+    import re
+
+    col_idx = data[0].index(column)
+    clean = data[1:]
+
+    result = [data[0]]
+    for i in range(len(clean)):
+        if bool(re.search(pattern, clean[i][col_idx])):
+            result.append(clean[i])
+
+    return result

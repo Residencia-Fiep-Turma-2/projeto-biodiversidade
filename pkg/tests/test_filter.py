@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 from pkg.src import utils
 from pkg.src.Bio import Bio
-from pkg.src.filters import *
+from pkg.src.filters import select_columns, filter_rows, filter_rows_pattern
 
 
 @pytest.fixture
@@ -66,3 +66,19 @@ class TestFilterRows:
     def test_non_match_column(self, data):
         with pytest.raises(ValueError):
             filter_rows(data, "non_exist", "1245")
+
+
+class TestFilterRowsRegex:
+    def test_single_column(self, data):
+        column = "Responsavel pelo registro"
+        pattern = "Petry"
+        assert filter_rows_pattern(data[0], column, pattern) == utils.filter_rows_pattern(data[1], column, pattern)
+
+    def test_all_columns(self, data):
+        pass
+
+    def test_single_column_non_match(self, data):
+        pass
+
+    def test_all_columns_non_match(self, data):
+        pass
