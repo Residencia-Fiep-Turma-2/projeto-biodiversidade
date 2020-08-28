@@ -93,12 +93,19 @@ class Bio:
     
     #Funcionalidade 3
     def select_columns(self, columns_list):
+        ''' Retorna as colunas selecionadas para o conjunto de dados importado
+        '''
+        # Verifica se o parâmetro columns_list é uma lista, caso contrário
+        # exibe erro
         if not isinstance(columns_list, list):
             raise TypeError("'columns_list' should be a list")
 
+        # Obtém de forma iterativa a posição das colunas de interesse
         col_idx = []
         [col_idx.append(self.data[0].index(col)) for col in columns_list]
 
+        # Obtém de forma iterativa os valores das linhas das colunas de
+        # interesse mantendo a estrutura padrão dos dados
         result = []
         for i in range(len(self.data)):
             result_i = []
@@ -109,9 +116,16 @@ class Bio:
 
 
     def filter_rows(self, column, value):
+        ''' Retorna as linhas que respeitem uma condição conforme coluna==valor
+        '''
+        # Obtém posição da coluna que está sendo comparada a algum valor
         col_idx = self.data[0].index(column)
+
+        # Remove o cabeçalho
         clean = self.data[1:]
 
+        # Para cada linha verifica se a coluna de interesse é igual ao valor
+        # informado, caso positivo captura a linha
         result = [[self.data[0]]]
         for i in range(len(clean)):
             if clean[i][col_idx] == value:
@@ -153,31 +167,28 @@ class Bio:
 
 
 ###########Testes############
-bio = Bio("../data/test.csv")
+if __name__ == "__main__":
+    bio = Bio("../data/test.csv")
 
-#Funcionalidade 1
-    #print(bio.media())
+    #Funcionalidade 1
+    print(bio.media())
 
-#Funcionalidade 2
+    #Funcionalidade 2
     #Executando a funcao checaNivelTaxonomico mostrando o número do registro
-    #result = bio.checaNivelTaxonomico()
-    #for i in range(1,len(result) - 1):
-    #    print("Nível taxônomico registro " + str(i) + " - " + result[i])
+    result = bio.checaNivelTaxonomico()
+    for i in range(1,len(result) - 1):
+        print("Nível taxônomico registro " + str(i) + " - " + result[i])
 
     #Versão simples (printando a lista com os resultados)
-    #print(bio.checaNivelTaxonomico())
+    print(bio.checaNivelTaxonomico())
 
-#Funcionalidade 3 
-    #columns_list = ["Responsavel pelo registro", "Data do evento"]
-    #print(bio.select_columns(columns_list))
+    #Funcionalidade 3 
+    columns_list = ["Responsavel pelo registro", "Data do evento"]
+    print(bio.select_columns(columns_list))
 
-    #column = "Numero do registro no portal"
-    #value = "262289"
-    #print(bio.filter_rows(column, value))
+    column = "Numero do registro no portal"
+    value = "262289"
+    print(bio.filter_rows(column, value))
 
-#Funcionalidade 4
-    #bio.verifica_lat_long()
-    
-
-
-
+    #Funcionalidade 4
+    bio.verifica_lat_long()
