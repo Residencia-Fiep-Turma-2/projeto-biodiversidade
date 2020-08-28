@@ -123,7 +123,7 @@ class Bio:
                     #retira pontuação para comparação com base de dados (base de dados sem pontuação)
                     cidade_coord = ''.join((c for c in unicodedata.normalize('NFD', (results[0]['components']['town'])) if unicodedata.category(c) != 'Mn'))
                     #Se cidade informada na base de dados for igual a cidade observada a partir de latitude e longitude
-                    if(bio.data[i][27] == cidade_coord):
+                    if(self.data[i][27] == cidade_coord):
                         print("Igual")
                     else:
                         print("Localização geográfica não correspondente ao informado \n\n")
