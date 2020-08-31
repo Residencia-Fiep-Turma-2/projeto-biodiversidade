@@ -2,7 +2,7 @@ from opencage.geocoder import OpenCageGeocode
 import unicodedata
 from collections import Counter
 import operator
-
+import re
 class Bio:
     sep = ";"
 
@@ -118,8 +118,22 @@ class Bio:
                 result.append(clean[i])
 
         return result
+
+    def filter_rows_pattern(self, column, pattern):
+        if not isinstance(column, str):
+            raise TypeError("'Column' should be a str type")
+
+        col_idx = self.data[0].index(column)
+        clean = self.data[1:]
+
+        result = [self.data[0]]
+        for i in range(len(clean)):
+            if bool(re.search(pattern, clean[i][col_idx])):
+                result.append(clean[i])
+
+        return result
     #Fim Funcionalide 3
-    
+
     #Funcionalidade 4
     def verifica_lat_long(self):
         

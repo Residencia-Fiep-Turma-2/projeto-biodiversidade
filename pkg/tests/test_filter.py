@@ -67,6 +67,14 @@ class TestFilterRows:
         with pytest.raises(ValueError):
             filter_rows(data, "non_exist", "1245")
 
+    def test_type_of_column_input(self, data):
+        with pytest.raises(TypeError):
+            filter_rows(data[0], ["Nome da base de dados"], "Sistema de Autorização e Informação em Biodiversidade.")
+
+    def test_type_of_pattern_input(self, data):
+        with pytest.raises(TypeError):
+            filter_rows_pattern(data[0], "Nome da base de dados", 1)
+
 
 class TestFilterRowsRegex:
     def test_single_column(self, data):
@@ -74,11 +82,19 @@ class TestFilterRowsRegex:
         pattern = "Petry"
         assert filter_rows_pattern(data[0], column, pattern) == utils.filter_rows_pattern(data[1], column, pattern)
 
-    def test_all_columns(self, data):
-        pass
-
     def test_single_column_non_match(self, data):
-        pass
+        column = "Responsavel pelo registro"
+        pattern = "No match"
+        assert filter_rows_pattern(data[0], column, pattern) == utils.filter_rows_pattern(data[1], column, pattern)
 
-    def test_all_columns_non_match(self, data):
-        pass
+    def test_missing_column_input(self, data):
+        with pytest.raises(ValueError):
+            filter_rows_pattern(data[0], "", "Petry")
+
+    def test_type_of_column_input(self, data):
+        with pytest.raises(TypeError):
+            filter_rows_pattern(data[0], ["Responsavel pelo registro"], "Petry")
+
+    def test_type_of_pattern_input(self, data):
+        with pytest.raises(TypeError):
+            filter_rows_pattern(data[0], "Responsavel pelo registro", ["2"])

@@ -18,6 +18,9 @@ def select_columns(data, columns_list):
 
 
 def filter_rows(data, column, value):
+    if not isinstance(column, str):
+        raise TypeError("'Column' should be a str type")
+
     col_idx = data[0].index(column)
     clean = data[1:]
 
@@ -31,6 +34,9 @@ def filter_rows(data, column, value):
 
 def filter_rows_pattern(data, column, pattern):
     import re
+
+    if not isinstance(column, str):
+        raise TypeError("'Column' should be a str type")
 
     col_idx = data[0].index(column)
     clean = data[1:]
