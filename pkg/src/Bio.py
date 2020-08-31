@@ -9,7 +9,7 @@ class Bio:
     def __init__(self, path):
         self.path = path
         self.data = self.open_()
-        self.filted_data = self.data
+        self.filtered_data = self.data
 
     def open_(self):
         f = open(self.path, "r")
@@ -113,7 +113,7 @@ class Bio:
             [result_i.append(self.data[i][j]) for j in col_idx]
             result.append(result_i)
 
-        self.filted_data = result
+        self.filtered_data = result
 
     def filter_rows(self, column, value):
         ''' Retorna as linhas que respeitem uma condição conforme coluna==valor
@@ -131,7 +131,7 @@ class Bio:
             if clean[i][col_idx] == value:
                 result.append(clean[i])
 
-        self.filted_data = result
+        self.filtered_data = result
 
     def filter_rows_pattern(self, column, pattern):
         ''' Retorna as linhas que respeitem uma condição de expressão regular
@@ -184,8 +184,8 @@ class Bio:
         ''' Transforma os dados do formato matricial para csv
         '''
         data_row = []
-        for i in range(len(self.filted_data)):
-            data_row.append(self.sep.join(self.filted_data[i]))
+        for i in range(len(self.filtered_data)):
+            data_row.append(self.sep.join(self.filtered_data[i]))
 
         result = "\n".join(data_row) + "\n"
         return result
@@ -201,7 +201,7 @@ class Bio:
     def reset_filtered_data(self):
         ''' Remove os filtros aplicados, isto é, filtered_data = data
         '''
-        self.filted_data = self.data
+        self.filtered_data = self.data
 
 ###########Testes############
 if __name__ == "__main__":
