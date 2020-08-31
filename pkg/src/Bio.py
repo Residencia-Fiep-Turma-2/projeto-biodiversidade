@@ -163,11 +163,23 @@ class Bio:
                         print("Localização geográfica não correspondente ao informado \n\n")
                         print("Localização informada:" + self.data[i][27] +"\n\n")
                         print("Localização informada por coordenadas: "+ cidade_coord)
-                        
 
+    def to_csv(self):
+        data_row = []
+        for i in range(len(self.data)):
+            data_row.append(self.sep.join(self.data[i]))
+
+        result = "\n".join(data_row) + "\n"
+        return result
+
+    def write_csv(self, path):
+        f = open(path, "w")
+        f.write(self.to_csv())
+        f.close()
+        print("Arquivo exportado")
 
 ###########Testes############
-bio = Bio("../data/test.csv")
+bio = Bio("./pkg/data/test.csv")
 
 #Funcionalidade 1
     #print(bio.media())
