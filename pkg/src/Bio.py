@@ -90,15 +90,22 @@ class Bio:
         #Começando da posicao 1 da lista, pois a primeira linha é o cabeçalho
         nivel_taxonomico = [x[13] for x in self.data[1:]]
         return nivel_taxonomico
-    
+
     #Funcionalidade 3
     def select_columns(self, columns_list):
+        ''' Retorna as colunas selecionadas para o conjunto de dados importado
+        '''
+        # Verifica se o parâmetro columns_list é uma lista, caso contrário
+        # exibe erro
         if not isinstance(columns_list, list):
             raise TypeError("'columns_list' should be a list")
 
+        # Obtém de forma iterativa a posição das colunas de interesse
         col_idx = []
         [col_idx.append(self.data[0].index(col)) for col in columns_list]
 
+        # Obtém de forma iterativa os valores das linhas das colunas de
+        # interesse mantendo a estrutura padrão dos dados
         result = []
         for i in range(len(self.data)):
             result_i = []
@@ -107,11 +114,17 @@ class Bio:
 
         return result
 
-
     def filter_rows(self, column, value):
+        ''' Retorna as linhas que respeitem uma condição conforme coluna==valor
+        '''
+        # Obtém posição da coluna que está sendo comparada a algum valor
         col_idx = self.data[0].index(column)
+
+        # Remove o cabeçalho
         clean = self.data[1:]
 
+        # Para cada linha verifica se a coluna de interesse é igual ao valor
+        # informado, caso positivo captura a linha
         result = [[self.data[0]]]
         for i in range(len(clean)):
             if clean[i][col_idx] == value:
@@ -120,6 +133,8 @@ class Bio:
         return result
 
     def filter_rows_pattern(self, column, pattern):
+        ''' Retorna as linhas que respeitem uma condição de expressão regular
+        '''
         if not isinstance(column, str):
             raise TypeError("'Column' should be a str type")
 
@@ -165,6 +180,8 @@ class Bio:
                         print("Localização informada por coordenadas: "+ cidade_coord)
 
     def to_csv(self):
+        ''' Transforma os dados do formato matricial para csv
+        '''
         data_row = []
         for i in range(len(self.data)):
             data_row.append(self.sep.join(self.data[i]))
@@ -173,37 +190,37 @@ class Bio:
         return result
 
     def write_csv(self, path):
+        ''' Exporta o conjunto de dados no formato csv para o caminho informado
+        '''
         f = open(path, "w")
         f.write(self.to_csv())
         f.close()
         print("Arquivo exportado")
 
+
 ###########Testes############
-bio = Bio("./pkg/data/test.csv")
+if __name__ == "__main__":
+    bio = Bio(".../data/test.csv")
 
-#Funcionalidade 1
-    #print(bio.media())
+    #Funcionalidade 1
+    print(bio.media())
 
-#Funcionalidade 2
+    #Funcionalidade 2
     #Executando a funcao checaNivelTaxonomico mostrando o número do registro
-    #result = bio.checaNivelTaxonomico()
-    #for i in range(1,len(result) - 1):
-    #    print("Nível taxônomico registro " + str(i) + " - " + result[i])
+    result = bio.checaNivelTaxonomico()
+    for i in range(1,len(result) - 1):
+       print("Nível taxônomico registro " + str(i) + " - " + result[i])
 
     #Versão simples (printando a lista com os resultados)
-    #print(bio.checaNivelTaxonomico())
+    print(bio.checaNivelTaxonomico())
 
-#Funcionalidade 3 
-    #columns_list = ["Responsavel pelo registro", "Data do evento"]
-    #print(bio.select_columns(columns_list))
+    #Funcionalidade 3 
+    columns_list = ["Responsavel pelo registro", "Data do evento"]
+    print(bio.select_columns(columns_list))
 
-    #column = "Numero do registro no portal"
-    #value = "262289"
-    #print(bio.filter_rows(column, value))
+    column = "Numero do registro no portal"
+    value = "262289"
+    print(bio.filter_rows(column, value))
 
-#Funcionalidade 4
-    #bio.verifica_lat_long()
-    
-
-
-
+    #Funcionalidade 4
+    bio.verifica_lat_long()
