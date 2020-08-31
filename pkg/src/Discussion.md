@@ -1,6 +1,6 @@
 # Discussão sobre robustez, algoritmos, e qualidade de dados.
 
-A importância da robustez dos algoritmos realizados é enfatizada conforme se testa diferentes bases de dados, sendo o algoritmo o responsável pelo tratamento dos dados para que sua utilização seja menos dispendiosa. Erros referentes a dados faltantes e imprecisos são comumente encontrados em sistemas que não sejam amplamente testados em diversas condições.
+A importância da robustez dos algoritmos realizados é enfatizada conforme se testa diferentes bases de dados, sendo o algoritmo o responsável pelo tratamento dos dados para que sua utilização seja menos dispendiosa. Erros referentes a dados faltantes e imprecisos são comumente encontrados em sistemas que não sejam amplamente testados em distintas condições.
   
   Não diferente dos demais algoritmos que lidam com diferentes bases de dados e que não sejam de ampla utilização, os testes realizados sobre as funcionalidades propostas demonstram a fragilidade de algoritmos que precisam de software de terceiros cujo desenvolvedores não estão familiarizados com suas especificidades, expressando também a escassez de dados obtidos de maneiras não controladas. Inicialmente, observando os dados faltantes e sua média por coluna fica claro como os dados tratados divergem entre si, obtendo médias 25% de dados faltantes por colunas, afetando gravemente as funcionalidades propostas.
   
