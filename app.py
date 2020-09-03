@@ -5,9 +5,14 @@ def teste():
     bio1 = Bio.Bio("pkg/data/test3.csv")
 
     #Funcionalidade 1
+    print("Funcionalidade de média de dados faltantes por coluna\n")
     print(bio1.media())
+
     #Funcionalidade 2
+    print("\n")
+    print("Funcionalidade de identificação de nível taxonômico por ocorrência\n")
     print(bio1.checaNivelTaxonomico())
+
     #Funcionalidade 3 
     #filtrandos os valores das colunas "Responsavel pelo registro" e "Data do evento"
     columns_list = ["Responsavel pelo registro", "Data do evento"]
@@ -17,8 +22,13 @@ def teste():
     value = "262289"
     bio1.filter_rows(column, value)
     #acessando os valores filtrados
+    print("\n")
+    print("csv filtrado por linhas e colunas \n")
     print(bio1.filtered_data)
+
     #Funcionalidade 4
+    print("\n")
+    print("Funcionalidade para checar a longitude e latitude corresponde com a localização\n")
     bio1.verifica_lat_long()
 
 def main():
