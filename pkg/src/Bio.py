@@ -4,10 +4,10 @@ from collections import Counter
 import operator
 import re
 class Bio:
-    sep = ";"
 
-    def __init__(self, path):
+    def __init__(self, path, sep=";"):
         self.path = path
+        self.sep = sep
         self.data = self.open_()
         self.filtered_data = self.data
 
@@ -17,7 +17,7 @@ class Bio:
         f.close()
 
         for i in range(len(data)):
-            data[i] = data[i].replace("\n", "").split(";")
+            data[i] = data[i].replace("\n", "").split(self.sep)
 
         return data
     
