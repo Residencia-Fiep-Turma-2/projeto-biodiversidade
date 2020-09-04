@@ -167,18 +167,31 @@ class Bio:
             if(i > 0):
                 #Recebe informações sobre latitude e longitude
                 results = geocoder.reverse_geocode(latitude, longitude)
-                #Se dentre os resultados, ouver componentes carregados sobre localização
-                if('town' in results[0]['components']):
-                    
-                    #retira pontuação para comparação com base de dados (base de dados sem pontuação)
-                    cidade_coord = ''.join((c for c in unicodedata.normalize('NFD', (results[0]['components']['town'])) if unicodedata.category(c) != 'Mn'))
-                    #Se cidade informada na base de dados for igual a cidade observada a partir de latitude e longitude
-                    if(self.data[i][27] == cidade_coord):
-                        print("Igual")
-                    else:
-                        print("Localização geográfica não correspondente ao informado \n\n")
-                        print("Localização informada:" + self.data[i][27] +"\n\n")
-                        print("Localização informada por coordenadas: "+ cidade_coord)
+                #Se dentre os resultados, houver componentes carregados sobre localização
+                if(len(results) >= 0):
+                    if('_category' in results[0]['components']):
+                        if(results[0]['components']['_category'] == 'place'):
+                            if('town' in results[0]['components']):
+                                print("tem cidade")
+                                #retira pontuação para comparação com base de dados (base de dados sem pontuação)
+                                cidade_coord = ''.join((c for c in unicodedata.normalize('NFD', (results[0]['components']['town'])) if unicodedata.category(c) != 'Mn'))
+                                #Se cidade informada na base de dados for igual a cidade observada a partir de latitude e longitude
+                                if(self.data[i][27] == cidade_coord):
+                                    print("Igual")
+                                else:
+                                    print("Localização geográfica não correspondente ao informado \n\n")
+                                    print("Localização informada:" + self.data[i][27] +"\n\n")
+                                    print("Localização informada por coordenadas: "+ cidade_coord)
+                        elif(results[0]['components']['_category'] == 'natural/water'):
+                            if('body_of_water' in results[0]['components']):
+                                print("Localização ocêanica:" + str(results[0]['components']['body_of_water']))
+                                print("Localização por coordenadas" + str(results[0]['geometry']) + "\n")
+                        else: 
+                            print("Localização do tipo: " + str(results[0]['components']['_category']))
+                            tipo = str(results[0]['components']['_type'])
+                            print( str(results[0]['components'][tipo]))
+                            print("Localização por coordenadas" + str(results[0]['geometry']) + "\n")
+                        
 
     def to_csv(self):
         ''' Transforma os dados do formato matricial para csv
@@ -205,7 +218,9 @@ class Bio:
 
 ###########Testes############
 if __name__ == "__main__":
-    bio = Bio(".../data/test.csv")
+
+    #bio = Bio(".../data/test.csv")
+    bio = Bio(".../data/ocean.csv")       
 
     #Funcionalidade 1
     print(bio.media())
