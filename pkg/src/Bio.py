@@ -12,9 +12,8 @@ class Bio:
         self.filtered_data = self.data
 
     def open_(self):
-        f = open(self.path, "r")
-        data = f.readlines()
-        f.close()
+        with open(self.path, "r") as f:
+            data = f.readlines()
 
         for i in range(len(data)):
             data[i] = data[i].replace("\n", "").split(self.sep)
@@ -29,13 +28,12 @@ class Bio:
     # O índice '1' corresponde à coluna da matriz "data" em que o dado faltante se encontra.
     
     def dicionario(self):
-        p = self.open_()
         cont_linha = -1
         cont_coluna = -1
         cont_faltante = 0
         dicionario = dict()
     
-        for linha in p:
+        for linha in self.data:
             cont_linha += 1
             for coluna in linha:
                 cont_coluna += 1
@@ -72,8 +70,7 @@ class Bio:
     # soma o total de dodos faltantes por coluna e divide pela quantidade de colunas 
     
     def media(self):
-        num_col0 = self.open_()
-        num_col1 = num_col0[0]
+        num_col1 = self.data[0]
         numero_colunas = len(num_col1)
         
         faltantes = self.dados_faltantes()
@@ -193,9 +190,9 @@ class Bio:
     def write_csv(self, path):
         ''' Exporta o conjunto de dados no formato csv para o caminho informado
         '''
-        f = open(path, "w")
-        f.write(self.to_csv())
-        f.close()
+        with open(path, "w") as f:
+            f.write(self.to_csv())
+
         print("Arquivo exportado")
 
     def reset_filtered_data(self):
