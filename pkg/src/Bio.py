@@ -1,4 +1,5 @@
 from opencage.geocoder import OpenCageGeocode
+import pandas as pd
 import unicodedata
 from collections import Counter
 import operator
@@ -6,18 +7,21 @@ import re
 class Bio:
     sep = ";"
 
-    def __init__(self, path):
+    def __init__(self, path, tipo = None):
         self.path = path
-        self.data = self.open_()
+        self.data = self.open_(tipo)
         self.filtered_data = self.data
 
-    def open_(self):
-        f = open(self.path, "r")
-        data = f.readlines()
-        f.close()
+    def open_(self,tipo = None):
+        if tipo == "pandas":
+            data = pd.read_csv(self.path, sep=";")
+        else:
+            f = open(self.path, "r")
+            data = f.readlines()
+            f.close()
 
-        for i in range(len(data)):
-            data[i] = data[i].replace("\n", "").split(";")
+            for i in range(len(data)):
+                data[i] = data[i].replace("\n", "").split(";")
 
         return data
     
@@ -114,6 +118,13 @@ class Bio:
             result.append(result_i)
 
         self.filtered_data = result
+
+    def select_columns_pandas(self, columns_list):
+        result = []
+        for col in columns_list:
+            result.append(self.data[col])
+        self.filtered_data = result
+        
 
     def filter_rows(self, column, value):
         ''' Retorna as linhas que respeitem uma condição conforme coluna==valor
