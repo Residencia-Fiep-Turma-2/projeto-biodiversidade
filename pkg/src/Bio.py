@@ -137,7 +137,7 @@ class Bio:
 
         # Para cada linha verifica se a coluna de interesse é igual ao valor
         # informado, caso positivo captura a linha
-        result = [[self.data[0]]]
+        result = [self.data[0]]
         for i in range(len(clean)):
             if clean[i][col_idx] == value:
                 result.append(clean[i])
