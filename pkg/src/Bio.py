@@ -179,7 +179,7 @@ class Bio:
                 #Recebe informações sobre latitude e longitude
                 results = geocoder.reverse_geocode(latitude, longitude)
                 #Se dentre os resultados, houver componentes carregados sobre localização
-                if(len(results) >= 0):
+                if(len(results) >= 0 and results != []):
                     #Se tiver categoria dentre os componentes do resultado
                     if('_category' in results[0]['components']):          
                         #Se a categoria para o resultado for do tipo "place"              
@@ -212,8 +212,9 @@ class Bio:
                             print("Localização do tipo: " + str(results[0]['components']['_category']))
                             tipo = str(results[0]['components']['_type'])
                             #Imprime a localização pelo seu tipo
-                            print( str(results[0]['components'][tipo]))
-                            print("Localização por coordenadas" + str(results[0]['geometry']) + "\n")
+                            if (tipo in results[0]['components']):
+                                print( str(results[0]['components'][tipo]))
+                                print("Localização por coordenadas" + str(results[0]['geometry']) + "\n")
                         
 
     def to_csv(self):
