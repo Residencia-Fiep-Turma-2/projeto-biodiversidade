@@ -169,10 +169,13 @@ class Bio:
                 results = geocoder.reverse_geocode(latitude, longitude)
                 #Se dentre os resultados, houver componentes carregados sobre localização
                 if(len(results) >= 0):
-                    if('_category' in results[0]['components']):
+                    #Se tiver categoria dentre os componentes do resultado
+                    if('_category' in results[0]['components']):          
+                        #Se a categoria para o resultado for do tipo "place"              
                         if(results[0]['components']['_category'] == 'place'):
+                            #Caso exista cidade nos componentes
                             if('town' in results[0]['components']):
-                                print("tem cidade")
+                                
                                 #retira pontuação para comparação com base de dados (base de dados sem pontuação)
                                 cidade_coord = ''.join((c for c in unicodedata.normalize('NFD', (results[0]['components']['town'])) if unicodedata.category(c) != 'Mn'))
                                 #Se cidade informada na base de dados for igual a cidade observada a partir de latitude e longitude
@@ -182,13 +185,22 @@ class Bio:
                                     print("Localização geográfica não correspondente ao informado \n\n")
                                     print("Localização informada:" + self.data[i][27] +"\n\n")
                                     print("Localização informada por coordenadas: "+ cidade_coord)
+                                    
+                        #Se a categoria for do tipo natural/water            
                         elif(results[0]['components']['_category'] == 'natural/water'):
                             if('body_of_water' in results[0]['components']):
+                                
+                                #Printa o tipo do corpo de água
                                 print("Localização ocêanica:" + str(results[0]['components']['body_of_water']))
                                 print("Localização por coordenadas" + str(results[0]['geometry']) + "\n")
+                                
+                        #Caso a categoria não for dos tipos "place" ou "natural/water"        
                         else: 
+                            
+                            #Imprime o tipo da localização
                             print("Localização do tipo: " + str(results[0]['components']['_category']))
                             tipo = str(results[0]['components']['_type'])
+                            #Imprime a localização pelo seu tipo
                             print( str(results[0]['components'][tipo]))
                             print("Localização por coordenadas" + str(results[0]['geometry']) + "\n")
                         
