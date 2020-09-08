@@ -1,4 +1,5 @@
 from opencage.geocoder import OpenCageGeocode
+import pandas as pd
 import unicodedata
 from collections import Counter
 import operator
@@ -6,18 +7,21 @@ import re
 class Bio:
     sep = ";"
 
-    def __init__(self, path):
+    def __init__(self, path, tipo = None):
         self.path = path
-        self.data = self.open_()
+        self.data = self.open_(tipo)
         self.filtered_data = self.data
 
-    def open_(self):
-        f = open(self.path, "r")
-        data = f.readlines()
-        f.close()
+    def open_(self,tipo = None):
+        if tipo == "pandas":
+            data = pd.read_csv(self.path, sep=";")
+        else:
+            f = open(self.path, "r")
+            data = f.readlines()
+            f.close()
 
-        for i in range(len(data)):
-            data[i] = data[i].replace("\n", "").split(";")
+            for i in range(len(data)):
+                data[i] = data[i].replace("\n", "").split(";")
 
         return data
     
@@ -115,6 +119,13 @@ class Bio:
 
         self.filtered_data = result
 
+    def select_columns_pandas(self, columns_list):
+        result = []
+        for col in columns_list:
+            result.append(self.data[col])
+        self.filtered_data = result
+        
+
     def filter_rows(self, column, value):
         ''' Retorna as linhas que respeitem uma condição conforme coluna==valor
         '''
@@ -204,28 +215,28 @@ class Bio:
         self.filtered_data = self.data
 
 ###########Testes############
-if __name__ == "__main__":
-    bio = Bio(".../data/test.csv")
+# if __name__ == "__main__":
+#     bio = Bio(".../data/test.csv")
 
-    #Funcionalidade 1
-    print(bio.media())
+#     #Funcionalidade 1
+#     print(bio.media())
 
-    #Funcionalidade 2
-    #Executando a funcao checaNivelTaxonomico mostrando o número do registro
-    result = bio.checaNivelTaxonomico()
-    for i in range(1,len(result) - 1):
-       print("Nível taxônomico registro " + str(i) + " - " + result[i])
+#     #Funcionalidade 2
+#     #Executando a funcao checaNivelTaxonomico mostrando o número do registro
+#     result = bio.checaNivelTaxonomico()
+#     for i in range(1,len(result) - 1):
+#        print("Nível taxônomico registro " + str(i) + " - " + result[i])
 
-    #Versão simples (printando a lista com os resultados)
-    print(bio.checaNivelTaxonomico())
+#     #Versão simples (printando a lista com os resultados)
+#     print(bio.checaNivelTaxonomico())
 
-    #Funcionalidade 3 
-    columns_list = ["Responsavel pelo registro", "Data do evento"]
-    print(bio.select_columns(columns_list))
+#     #Funcionalidade 3 
+#     columns_list = ["Responsavel pelo registro", "Data do evento"]
+#     print(bio.select_columns(columns_list))
 
-    column = "Numero do registro no portal"
-    value = "262289"
-    print(bio.filter_rows(column, value))
+#     column = "Numero do registro no portal"
+#     value = "262289"
+#     print(bio.filter_rows(column, value))
 
-    #Funcionalidade 4
-    bio.verifica_lat_long()
+#     #Funcionalidade 4
+#     bio.verifica_lat_long()
