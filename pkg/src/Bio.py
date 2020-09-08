@@ -240,7 +240,7 @@ class Bio:
         self.filtered_data = self.data
 
 ###########Testes############
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
     #bio = Bio(".../data/test.csv")
     #bio = Bio(".../data/ocean.csv")       
